@@ -1,0 +1,462 @@
+/* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 78px;
+    background: #11101D;
+    padding: 6px 0; /* Reducir padding horizontal */
+    z-index: 99;
+    transition: all 0.5s ease;
+}
+
+.sidebar.open {
+    width: 250px;
+}
+
+.sidebar .logo-details {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.sidebar .logo-details .icon {
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.sidebar .logo-details .logo_name {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name {
+    opacity: 1;
+}
+
+.sidebar .logo-details #btn-menu {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: all 0.4s ease;
+    font-size: 23px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.sidebar.open .logo-details #btn-menu {
+    text-align: right;
+}
+
+.sidebar i {
+    color: #fff;
+    height: 60px;
+    min-width: 40px;
+    font-size: 28px;
+    text-align: center;
+    line-height: 60px;
+}
+
+.sidebar.open i {
+    font-size: 28px;
+}
+
+.sidebar li i {
+    height: 50px;
+    line-height: 50px;
+    font-size: 22px;
+    border-radius: 12px;
+    text-align: center;
+    width: 40px;
+    flex-shrink: 0; /* Evita que el icono se encoja */
+}
+
+.sidebar .nav-list {
+    margin-top: 20px;
+    height: 100%;
+}
+
+.sidebar li {
+    position: relative;
+    margin: 8px 0;
+    list-style: none;
+}
+
+.sidebar li .tooltip {
+    position: absolute;
+    top: -20px;
+    left: calc(100% + 15px);
+    z-index: 3;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 400;
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: 0s;
+}
+
+.sidebar li:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.sidebar.open li .tooltip {
+    display: none;
+}
+
+.sidebar li a {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    background: #11101D;
+    justify-content: flex-start; /* Centrar el contenido (icono) */
+}
+
+.sidebar.open li a {
+    justify-content: flex-start; /* Alinear a la izquierda cuando está abierto */
+    padding: 0 14px;
+}
+
+.sidebar li a i {
+    margin-right: 0; /* Quitar margen cuando está colapsado */
+}
+
+.sidebar.open li a i {
+    margin-right: 5px; /* Añadir margen cuando está abierto */
+}
+
+.sidebar li a:hover {
+    background: #0d6efd; /* Color primario al pasar el mouse */
+}
+
+.sidebar li a .links_name {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+}
+
+.sidebar.open li a .links_name {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i {
+    transition: all 0.5s ease;
+    color: #11101D;
+}
+
+.sidebar li a.active {
+    background: #0d6efd; /* Color primario para el elemento activo */
+}
+
+.sidebar li a.active .links_name,
+.sidebar li a.active i {
+    color: #fff;
+}
+
+
+/* Eliminado para evitar duplicados */
+
+.sidebar li.profile {
+    position: fixed;
+    height: 80px;
+    width: 78px;
+    left: 0;
+    bottom: 0;
+    padding: 10px 14px;
+    background: #1d1b31;
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+.sidebar.open li.profile {
+    width: 250px;
+}
+
+.sidebar li .profile-details {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+}
+
+.sidebar li img {
+    height: 55px;
+    width: 45px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+.sidebar li.profile .name,
+.sidebar li.profile .job {
+    font-size: 15px;
+    font-weight: 400;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.sidebar li.profile .job {
+    font-size: 12px;
+}
+
+.sidebar ul {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.sidebar .profile #logout-button {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: #1d1b31;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 0px;
+    transition: all 0.5s ease;
+}
+
+.sidebar.open .profile #logout-button {
+    width: 50px;
+    background: none;
+}
+
+.home-section {
+    position: relative;
+    background: #E4E9F7;
+    min-height: 100vh;
+    top: 0;
+    margin-left: 78px;
+    width: calc(100% - 78px);
+    transition: all 0.5s ease;
+    z-index: 2;
+}
+
+.sidebar.open ~ .home-section {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+.home-section .contenedor {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+}
+
+.seccion_cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.seccion_botones {
+    display: flex;
+    gap: 10px;
+}
+
+.seccion_buscador .input-group {
+    width: 300px;
+}
+
+.seccion_principal {
+    flex-grow: 1;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    overflow-y: auto;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.seccion_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .home-section {
+        margin-left: 78px;
+        width: calc(100% - 78px);
+    }
+    .sidebar.open ~ .home-section {
+        margin-left: 78px;
+        width: calc(100% - 78px);
+    }
+}
+
+@media (max-width: 420px) {
+    .sidebar li .tooltip {
+        display: none;
+    }
+}
+
+/* --- Estilos para Tablas --- */
+.table-custom {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+}
+
+.table-custom thead {
+    background: #f7f7f7;
+}
+
+.table-custom thead th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 2px solid #dee2e6;
+    text-align: left;
+}
+
+.table-custom tbody tr {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table-custom tbody tr:last-child {
+    border-bottom: none;
+}
+
+.table-custom tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-custom tbody td {
+    padding: 0.1rem 1.1rem;
+    color: #495057;
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.action-column {
+    width: 120px;
+    text-align: center;
+}
+
+.action-column .btn-custom {
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.25rem;
+    border: none;
+    border-radius: 0.25rem;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-custom-edit {
+    background-color: #ffc107;
+}
+
+.btn-custom-delete {
+    background-color: #dc3545;
+}
+
+/* --- Estilos para Paginación --- */
+.pagination-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    font-size: 0.875rem;
+}
+
+.pagination-controls-left,
+.pagination-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination-label {
+    color: #6c757d;
+}
+
+.pagination-select {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    background-color: #fff;
+}
+
+.pagination-info {
+    color: #6c757d;
+}
+
+.pagination-button {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    color: #0d6efd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination-button:hover {
+    background-color: #f8f9fa;
+}
+
+.pagination-button:disabled {
+    color: #6c757d;
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    border-color: #dee2e6;
+}
+
+/* --- Estilos para Modales --- */
+.modal-custom {
+    z-index: 1055 !important; /* Asegura que el modal esté sobre otros elementos como el sidebar */
+}

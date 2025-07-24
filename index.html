@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Principal - ServiVENT 10.1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar open">
+        <div class="logo-details">
+            <i class='bx bxs-pyramid icon'></i>
+            <div class="logo_name">ServiVENT</div>
+            <i class='bx bx-menu' id="btn-menu"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="#" id="nav-home" class="nav-link active" aria-current="page">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Inicio</span>
+                </a>
+                <span class="tooltip">Inicio</span>
+            </li>
+            <li>
+                <a href="#" id="nav-usuarios" class="nav-link">
+                    <i class='bx bx-user'></i>
+                    <span class="links_name">Usuarios</span>
+                </a>
+                <span class="tooltip">Usuarios</span>
+            </li>
+            <li>
+                <a href="#" id="nav-sucursales" class="nav-link">
+                    <i class='bx bxs-store-alt'></i>
+                    <span class="links_name">Sucursales</span>
+                </a>
+                <span class="tooltip">Sucursales</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-cog'></i>
+                    <span class="links_name">Configuraciones</span>
+                </a>
+                <span class="tooltip">Configuraciones</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="https://via.placeholder.com/40" alt="profile image" id="user-avatar">
+                    <div class="profile-text-container">
+                        <div class="name" id="user-display-name"></div>
+                        <div class="job" id="user-display-role"></div>
+                        <div class="job" id="user-display-branch"></div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="logout-button"></i>
+            </li>
+        </ul>
+    </div>
+
+    <section class="home-section">
+        <div class="contenedor">
+            <header class="seccion_cabecera">
+                <div class="seccion_botones" id="seccion_botones">
+                    <!-- Los botones se agregarán dinámicamente aquí -->
+                </div>
+                <div class="seccion_buscador">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar..." id="search-input">
+                        <button class="btn btn-outline-secondary" type="button" id="search-button">
+                            <i class='bx bx-search'></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <main class="seccion_principal" id="main-content">
+                <!-- El contenido del módulo se cargará aquí -->
+            </main>
+            <footer class="seccion_footer">
+                <div class="seccion_footer_izquierdo">
+                    <span>ServiVENT 10.1 &copy; 2024</span>
+                </div>
+                <div class="seccion_footer_derecho">
+                    <span id="user-display-branch"></span>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script type="module" src="js/main.js"></script>
+
+    <!-- Modal para agregar/editar usuario -->
+    <div class="modal fade modal-custom" id="user-modal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="user-form">
+                        <input type="hidden" id="user-id">
+                        <div class="mb-3 text-center">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" id="avatar-preview" class="rounded-circle mb-2" alt="Avatar" width="100" height="100" style="object-fit: cover;">
+                            <input type="file" class="form-control" id="avatar-file" accept="image/*">
+                            <input type="hidden" id="avatar-url">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="telefono" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="rol" class="form-label">Rol</label>
+                                <select id="rol" class="form-select" required>
+                                    <option value="Propietario">Propietario</option>
+                                    <option value="Administrador">Administrador</option>
+                                    <option value="Usuario">Usuario</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="sucursal_id" class="form-label">Sucursal</label>
+                                <select id="sucursal_id" class="form-select" required>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="usuario" class="form-label">Usuario</label>
+                                <input type="text" class="form-control" id="usuario" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="pin" class="form-label">PIN</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="pin" required maxlength="4">
+                                    <button class="btn btn-outline-secondary" type="button" id="toggle-pin-visibility">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar/editar sucursal -->
+    <div class="modal fade modal-custom" id="sucursal-modal" tabindex="-1" aria-labelledby="sucursal-modal-title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sucursal-modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="sucursal-form">
+                        <input type="hidden" id="sucursal-id">
+                        <div class="mb-3">
+                            <label for="sucursal-empresa" class="form-label">Empresa</label>
+                            <input type="text" class="form-control" id="sucursal-empresa" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sucursal-nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="sucursal-nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sucursal-telefono" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="sucursal-telefono">
+                        </div>
+                        <div class="mb-3">
+                            <label for="sucursal-direccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="sucursal-direccion">
+                        </div>
+                        <div class="mb-3">
+                            <label for="sucursal-documento" class="form-label">Documento</label>
+                            <input type="text" class="form-control" id="sucursal-documento">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
